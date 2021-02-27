@@ -6,16 +6,18 @@ import numpy as np
 
 @dataclass
 class ReadData:
-    acce: np.ndarray
-    acce_uncali: np.ndarray
-    gyro: np.ndarray
-    gyro_uncali: np.ndarray
-    magn: np.ndarray
-    magn_uncali: np.ndarray
-    ahrs: np.ndarray
-    wifi: np.ndarray
-    ibeacon: np.ndarray
-    waypoint: np.ndarray
+    startTime   : int
+    endTime     : int
+    acce        : np.ndarray
+    acce_uncali : np.ndarray
+    gyro        : np.ndarray
+    gyro_uncali : np.ndarray
+    magn        : np.ndarray
+    magn_uncali : np.ndarray
+    ahrs        : np.ndarray
+    wifi        : np.ndarray
+    ibeacon     : np.ndarray
+    waypoint    : np.ndarray
 
 re_LINE_HEADER = re.compile('\\d{13}\tTYPE_')
 def to_logical_lines(line):
@@ -38,12 +40,20 @@ def read_data_file(data_filename):
     wifi = list()
     ibeacon = list()
     waypoint = list()
+    startTime = None
+    endTime   = None
 
     with open(data_filename, 'r', encoding='utf-8') as file:
         lines = file.readlines()
 
     for line in lines:
         line = line.strip()
+        if line.startswith('#\tstartTime'):
+            startTime = int(re.split('[:\t]', line)[2])
+            continue
+        if line.startswith('#\tendTime'):
+            endTime = int(re.split('[:\t]', line)[2])
+            continue
         if (not line) or line.startswith('#'):
             continue
         for line_data in to_logical_lines(line):
@@ -112,4 +122,4 @@ def read_data_file(data_filename):
     ibeacon = np.array(ibeacon)
     waypoint = np.array(waypoint)
 
-    return ReadData(acce, acce_uncali, gyro, gyro_uncali, magn, magn_uncali, ahrs, wifi, ibeacon, waypoint)
+    return ReadData(startTime, endTime, acce, acce_uncali, gyro, gyro_uncali, magn, magn_uncali, ahrs, wifi, ibeacon, waypoint)
