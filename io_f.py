@@ -64,7 +64,22 @@ def read_data_file(data_filename):
                 continue
 
             if line_data[1] == 'TYPE_ACCELEROMETER_UNCALIBRATED':
-                acce_uncali.append([int(line_data[0]), float(line_data[2]), float(line_data[3]), float(line_data[4])])
+                if len(line_data) > 5:
+                    acce_uncali.append([int(line_data[0]),
+                                        float(line_data[2]), # x
+                                        float(line_data[3]), # y
+                                        float(line_data[4]), # z
+                                        float(line_data[5]), # x
+                                        float(line_data[6]), # y
+                                        float(line_data[7]), # z
+                                        int(  line_data[8]), # accuracy
+                                        ])
+                else:
+                    acce_uncali.append([int(line_data[0]),
+                                        float(line_data[2]), # x
+                                        float(line_data[3]), # y
+                                        float(line_data[4]), # z
+                                        ])
                 continue
 
             if line_data[1] == 'TYPE_GYROSCOPE':
@@ -72,7 +87,22 @@ def read_data_file(data_filename):
                 continue
 
             if line_data[1] == 'TYPE_GYROSCOPE_UNCALIBRATED':
-                gyro_uncali.append([int(line_data[0]), float(line_data[2]), float(line_data[3]), float(line_data[4])])
+                if len(line_data) > 5:
+                    gyro_uncali.append([int(line_data[0]),
+                                        float(line_data[2]), # x
+                                        float(line_data[3]), # y
+                                        float(line_data[4]), # z
+                                        float(line_data[5]), # x
+                                        float(line_data[6]), # y
+                                        float(line_data[7]), # z
+                                        int(  line_data[8]), # accuracy
+                                        ])
+                else:
+                    gyro_uncali.append([int(line_data[0]),
+                                        float(line_data[2]), # x
+                                        float(line_data[3]), # y
+                                        float(line_data[4]), # z
+                                        ])
                 continue
 
             if line_data[1] == 'TYPE_MAGNETIC_FIELD':
@@ -80,7 +110,22 @@ def read_data_file(data_filename):
                 continue
 
             if line_data[1] == 'TYPE_MAGNETIC_FIELD_UNCALIBRATED':
-                magn_uncali.append([int(line_data[0]), float(line_data[2]), float(line_data[3]), float(line_data[4])])
+                if len(line_data) > 5:
+                    magn_uncali.append([int(line_data[0]),
+                                        float(line_data[2]), # x
+                                        float(line_data[3]), # y
+                                        float(line_data[4]), # z
+                                        float(line_data[5]), # x
+                                        float(line_data[6]), # y
+                                        float(line_data[7]), # z
+                                        int(  line_data[8]), # accuracy
+                                        ])
+                else:
+                    magn_uncali.append([int(line_data[0]),
+                                        float(line_data[2]), # x
+                                        float(line_data[3]), # y
+                                        float(line_data[4]), # z
+                                        ])
                 continue
 
             if line_data[1] == 'TYPE_ROTATION_VECTOR':
