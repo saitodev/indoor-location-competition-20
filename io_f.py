@@ -29,7 +29,7 @@ def to_logical_lines(line):
         yield logical_line
     return
 
-def read_data_file(data_filename):
+def read_data_file(data_filename, is_test=False):
     acce = list()
     acce_uncali = list()
     gyro = list()
@@ -148,7 +148,11 @@ def read_data_file(data_filename):
                 major = line_data[3]
                 minor = line_data[4]
                 rssi = line_data[6]
-                ibeacon_data = [ts, '_'.join([uuid, major, minor]), rssi]
+                if is_test:
+                    real_ts = line_data[9]
+                    ibeacon_data = [ts, '_'.join([uuid, major, minor]), rssi, real_ts]
+                else:
+                    ibeacon_data = [ts, '_'.join([uuid, major, minor]), rssi]
                 ibeacon.append(ibeacon_data)
                 continue
 
